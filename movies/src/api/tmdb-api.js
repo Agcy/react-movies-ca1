@@ -1,6 +1,8 @@
-export const getMovies = () => {
+import React, {useEffect} from "react";
+import i18n from '../components/languageOptions/index'
+export const getMovies = (language) => {
   return fetch(
-    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=1`
+    `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=${language}&include_adult=false&include_video=false&page=1`
   ).then((response) => {
     if (!response.ok) {
       throw new Error(response.json().message);
@@ -29,11 +31,12 @@ export const getMovie = (args) => {
  });
 };
 
-export const getGenres = async () => {
+export const getGenres = async (language) => {
   return fetch(
     "https://api.themoviedb.org/3/genre/movie/list?api_key=" +
       process.env.REACT_APP_TMDB_KEY +
-      "&language=en-US"
+      "&language=" +
+      language
   ).then( (response) => {
     if (!response.ok) {
       throw new Error(response.json().message);
@@ -73,9 +76,9 @@ export const getMovieReviews = (id) => {
     });
 };
 
-export const getUpcomingMovie = () => {
+export const getUpcomingMovie = (language) => {
   return fetch(
-    `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`
+    `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=${language}&page=1`
   ).then((response) => {
     if (!response.ok) {
       throw new Error(response.json().message);
@@ -85,4 +88,11 @@ export const getUpcomingMovie = () => {
   .catch((error) => {
      throw error
   });
+}
+
+export const getChangeLanguage = () => {
+  return fetch(
+      'https://api.themoviedb.org/3/configuration/language'
+
+  )
 }

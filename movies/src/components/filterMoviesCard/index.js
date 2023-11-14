@@ -14,7 +14,7 @@ import Select from "@mui/material/Select";
 import img from '../../images/pexels-dziana-hasanbekava-5480827.jpg';
 import { getGenres } from "../../api/tmdb-api";
 
-const formControl = 
+const formControl =
   {
     margin: 1,
     minWidth: 220,
@@ -51,11 +51,10 @@ export default function FilterMoviesCard(props) {
   };
 
   return (
-    <Card 
+    <Card
       sx={{
-        maxWidth: 345,
-        backgroundColor: "rgb(204, 204, 0)"
-      }} 
+        maxWidth: 1800
+      }}
       variant="outlined">
       <CardContent>
         <Typography variant="h5" component="h1">
@@ -63,7 +62,7 @@ export default function FilterMoviesCard(props) {
           Filter the movies.
         </Typography>
         <TextField
-          sx={{...formControl}}
+          sx={{...formControl, maxWidth: 1800}}
           id="filled-search"
           label="Search field"
           type="search"
@@ -91,7 +90,7 @@ export default function FilterMoviesCard(props) {
         </FormControl>
       </CardContent>
       <CardMedia
-        sx={{ height: 300 }}
+        sx={{ height: 900 }}
         image={img}
         title="Filter"
       />
