@@ -90,6 +90,12 @@ export const getUpcomingMovie = (language) => {
   });
 }
 
+export const getTrendingMovies = (language) => {
+  return fetch(
+      `https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.REACT_APP_TMDB_KEY}&language=${language}&page=1`
+  ).then(response => response.json());
+};
+
 export const getChangeLanguage = () => {
   return fetch(
       'https://api.themoviedb.org/3/configuration/language'

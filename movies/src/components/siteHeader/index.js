@@ -44,10 +44,15 @@ const SiteHeader = ({ history }) => {
 
   const menuOptions = [
     { label: "Home", path: "/" },
-    { label: "Favorites", path: "/movies/favorites" },
+    { label: "Trending", path: "/movies/trending" },
     { label: "Upcoming", path: "/movies/upcoming" },
-    { label: "Marked", path: "/movies/marked" },
+
   ];
+
+  const myOptions = [
+    {label: "Favorites", path:"/movies/favorites"},
+    { label: "Marked", path: "/movies/marked" },
+  ]
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -69,11 +74,7 @@ const SiteHeader = ({ history }) => {
           onKeyDown={toggleDrawer(anchor, false)}
       >
         <List>
-          {menuOptions
-              .filter(option =>
-              option.label === "Favorites" || option.label === "Marked"
-          )
-            .map((object, index) => (
+          {myOptions.map((object, index) => (
               <ListItem key={object.label} disablePadding>
                 <ListItemButton to={object.path} component={Link}>
                   <ListItemIcon>
@@ -144,9 +145,7 @@ const SiteHeader = ({ history }) => {
                   open={open}
                   onClose={() => setAnchorEl(null)}
                 >
-                  {menuOptions
-                      .filter(opt => opt.label === "Home" || opt.label === "Upcoming")
-                      .map((opt) => (
+                  {menuOptions.map((opt) => (
                     <MenuItem
                       key={opt.label}
                       onClick={() => handleMenuSelect(opt.path)}
@@ -158,9 +157,7 @@ const SiteHeader = ({ history }) => {
               </>
             ) : (
               <>
-                {menuOptions
-                    .filter(opt => opt.label === "Home" || opt.label === "Upcoming")
-                    .map((opt) => (
+                {menuOptions.map((opt) => (
                   <Button
                     key={opt.label}
                     color="inherit"
