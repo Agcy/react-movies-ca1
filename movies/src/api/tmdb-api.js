@@ -92,7 +92,28 @@ export const getUpcomingMovie = (language) => {
 
 export const getTrendingMovies = (language) => {
   return fetch(
-      `https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.REACT_APP_TMDB_KEY}&language=${language}&page=1`
+      `https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.REACT_APP_TMDB_KEY}&language=${language}`
+  ).then(response => {
+    if (!response.ok) {
+      throw new Error(response.json().message);
+    }
+    return response.json();
+  })
+  .catch((error) => {
+    throw error
+  });
+
+};
+
+export const getPopularActors = (language) => {
+  return fetch(
+      `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&language=${language}`
+  ).then(response => response.json());
+};
+
+export const getActorDetails = (id, language) => {
+  return fetch(
+      `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}&language=${language}`
   ).then(response => response.json());
 };
 

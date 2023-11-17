@@ -46,7 +46,7 @@ const SiteHeader = ({ history }) => {
     { label: "Home", path: "/" },
     { label: "Trending", path: "/movies/trending" },
     { label: "Upcoming", path: "/movies/upcoming" },
-
+    { label: "Actor", path: "/actors"}
   ];
 
   const myOptions = [
