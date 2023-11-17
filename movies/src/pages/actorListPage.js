@@ -5,7 +5,7 @@ import AddToPreviewsIcon from '../components/cardIcons/addToPreviews'
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
 
-const ActorPage = (props) => {
+const ActorListPage = (props) => {
     const {  data, error, isLoading, isError }  = useQuery('actor', getPopularActors)
 
     if (isLoading) {
@@ -32,4 +32,4 @@ const ActorPage = (props) => {
         />
     );
 };
-export default ActorPage;
+export default ActorListPage;
