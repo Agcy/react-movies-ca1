@@ -2,66 +2,34 @@ import React, { useState } from "react";
 
 export const ActorsContext = React.createContext(null);
 
-const ActorsContextProvider = (props) => {
-    const [favorites, setFavorites] = useState( [] )
-    const [myReviews, setMyReviews] = useState( {} )
-    const [previews, setPreviews] = useState( [] )
+export const ActorsProvider = ({ children }) => {
+    const [following, setFollowing] = useState([]);
 
-    const addToFavorites = (movie) => {
-        let newFavorites = [];
-        if (!favorites.includes(movie.id)){
-            newFavorites = [...favorites, movie.id];
+    const addToFollowing = (actor) => {
+        let newFollow = [];
+        if (!following.includes(actor.id)){
+            newFollow = [...following, actor.id];
         }
         else{
-            newFavorites = [...favorites];
+            newFollow = [...following];
         }
-        setFavorites(newFavorites)
+        setFollowing(newFollow)
     };
 
-    const addReview = (movie, review) => {
-        setMyReviews( {...myReviews, [movie.id]: review } )
-    };
-    //console.log(myReviews);
-
-    // We will use this function in a later section
-    const removeFromFavorites = (movie) => {
-        setFavorites( favorites.filter(
-            (mId) => mId !== movie.id
+    const removeFromFollowed= (actor) => {
+        setFollowing( following.filter(
+            (aId) => aId !== actor.id
         ) )
     };
-
-    const addToPreviews = (movie) => {
-        let newMovies = [];
-        if (!previews.includes(movie.id)){
-            newMovies = [...previews, movie.id];
-        }
-        else{
-            newMovies = [...previews];
-        }
-        setPreviews(newMovies)
-    }
-
-    const removeFromPreviews = (movie) => {
-        setPreviews( previews.filter(
-            (mId) => mId !== movie.id
-        ))
-    }
 
     return (
         <ActorsContext.Provider
             value={{
-                favorites,
-                previews,
-                addToFavorites,
-                removeFromFavorites,
-                addReview,
-                addToPreviews,
-                removeFromPreviews
-            }}
-        >
-            {props.children}
+                following,
+                addToFollowing,
+                removeFromFollowed
+        }}>
+            {children}
         </ActorsContext.Provider>
     );
 };
-
-export default ActorsContextProvider;

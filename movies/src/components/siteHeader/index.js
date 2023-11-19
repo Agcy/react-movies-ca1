@@ -52,6 +52,7 @@ const SiteHeader = ({ history }) => {
   const myOptions = [
     {label: "Favorites", path:"/movies/favorites"},
     { label: "Marked", path: "/movies/marked" },
+    { label: "Followed", path: "actors/followed"}
   ]
 
   const toggleDrawer = (anchor, open) => (event) => {
