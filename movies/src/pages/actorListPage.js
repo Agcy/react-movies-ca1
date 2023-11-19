@@ -1,6 +1,6 @@
 import React from "react";
 import { getPopularActors } from "../api/tmdb-api";
-import ActorListPageTemplate from '../components/templeteActorListPage'
+import ActorListPageTemplate from '../components/actor/templeteActorListPage'
 import AddToPreviewsIcon from '../components/cardIcons/addToPreviews'
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';

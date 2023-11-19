@@ -5,12 +5,14 @@ import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { getActorImages } from "../../api/tmdb-api";
+import { getActorImages } from "../../../api/tmdb-api";
 import { useQuery } from "react-query";
-import Spinner from '../spinner';
+import Spinner from '../../spinner';
 
 const TemplateActorPage = ({ actor, children }) => {
+
     const [currentImgIndex, setCurrentImgIndex] = useState(0);
+
     const { data, error, isLoading, isError } = useQuery(
         ["images", { id: actor.id }],
         getActorImages

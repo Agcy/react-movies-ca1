@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Avatar from '@mui/material/Avatar';
 import Grid from "@mui/material/Grid";
-import placeholderImg from '../../images/pexels-dziana-hasanbekava-5480827.jpg';
+import placeholderImg from '../../../images/pexels-dziana-hasanbekava-5480827.jpg';
 
 export default function ActorCard({ actor, action }) {
     return (

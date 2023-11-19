@@ -2,7 +2,7 @@ import React from "react";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
-import { formatDate } from "../../util"; // 假设有一个用于格式化日期的函数
+import { formatDate } from "../../../util"; // 假设有一个用于格式化日期的函数
 
 const root = {
     display: "flex",

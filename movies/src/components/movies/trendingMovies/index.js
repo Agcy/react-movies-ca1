@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getTrendingMovies } from '../../api/tmdb-api';
+import { getTrendingMovies } from '../../../api/tmdb-api';
 
 const TrendingMovies = () => {
     const [movies, setMovies] = useState([]);

@@ -1,5 +1,5 @@
 import React from "react";
-import MovieCard from "../components/movieCard";
+import MovieCard from "../components/movies/movieCard";
 import SampleMovie from "./sampleData";
 
 export default {
