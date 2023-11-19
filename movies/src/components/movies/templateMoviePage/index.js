@@ -7,7 +7,8 @@ import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { getMovieImages } from "../../../api/tmdb-api";
+import { getMovieImages, getMovieCredits } from "../../../api/tmdb-api";
+import RelativeActorsList from "../../relativeInfomation/relativeActorsList";
 import { useQuery } from "react-query";
 import Spinner from '../../spinner'
 
@@ -15,10 +16,19 @@ const TemplateMoviePage = ({ movie, children }) => {
 
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
 
-  const { data , error, isLoading, isError } = useQuery(
-    ["images", { id: movie.id }],
-    getMovieImages
+  const { data: imageData, error: imageError, isLoading: isImageLoading, isError: isImageError } = useQuery(
+      ["images", { id: movie.id }],
+      getMovieImages
   );
+
+  const { data: creditsData, error: creditsError, isLoading: isCreditsLoading, isError: isCreditsError } = useQuery(
+      ["credits", { id: movie.id }],
+      getMovieCredits
+  );
+
+  const isLoading = isImageLoading || isCreditsLoading;
+  const isError = isImageError || isCreditsError;
+  const error = imageError || creditsError;
 
   if (isLoading) {
     return <Spinner />;
@@ -28,7 +38,8 @@ const TemplateMoviePage = ({ movie, children }) => {
     return <h1>{error.message}</h1>;
   }
 
-  const images = data.posters
+  const images = imageData.posters
+  const actors = creditsData.cast; // 假设数据中包含演员列表
 
   const handlePrev = () => {
     setCurrentImgIndex((prevIndex) =>
@@ -78,10 +89,13 @@ const TemplateMoviePage = ({ movie, children }) => {
             </IconButton>
           </Paper>
         </Grid>
-
         <Grid item xs={9}>
           {children}
         </Grid>
+      </Grid>
+      <Grid item xs={9}>
+        {/* ... 电影详细信息 */}
+        <RelativeActorsList actors={actors} /> {/* 展示演员列表 */}
       </Grid>
     </>
   );
