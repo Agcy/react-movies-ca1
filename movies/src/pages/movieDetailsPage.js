@@ -1,8 +1,8 @@
 import React from "react";
 import { useParams } from 'react-router-dom';
-import MovieDetails from "../components/movies/movieDetails/";
+import MovieDetails from "../components/movie/movieDetails/";
 import RelativeMoviesList from "../components/relativeInfomation/relativeMoviesList";
-import PageTemplate from "../components/movies/templateMoviePage";
+import PageTemplate from "../components/movie/templateMoviePage";
 import { getMovie,getMovieCredits } from '../api/tmdb-api'
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner'

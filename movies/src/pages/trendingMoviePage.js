@@ -1,11 +1,11 @@
 // TrendingMoviesPage.js
 import React from 'react';
-import TrendingMovies from '../components/movies/trendingMovies';
+import TrendingMovies from '../components/movie/trendingMovies';
 import {useQuery} from "react-query";
 import {getTrendingMovies} from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import RemoveFromPreviews from "../components/cardIcons/removeFromPreviews";
-import PageTemplate from "../components/movies/templateMovieListPage";
+import PageTemplate from "../components/movie/templateMovieListPage";
 import AddToFavoritesIcon from "../components/cardIcons/addToFavorites";
 
 const TrendingMoviesPage = () => {
