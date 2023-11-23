@@ -140,12 +140,6 @@ export const getPopularActors = (language) => {
     ).then(response => response.json());
 };
 
-export const getActorDetail = (id, language) => {
-    return fetch(
-        `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}&language=${language}`
-    ).then(response => response.json());
-};
-
 export const getActorImages = ({queryKey}) => {
     const [, idPart] = queryKey;
     const {id} = idPart;
