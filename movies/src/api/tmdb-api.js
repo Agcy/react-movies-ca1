@@ -140,9 +140,11 @@ export const getActor = ({queryKey}) => {
     });
 };
 
-export const getPopularActors = (language) => {
+export const getPopularActors = (args) => {
+    const [, pageMode] = args.queryKey
+    const {language, page} = pageMode
     return fetch(
-        `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&language=${language}`
+        `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&language=${language}&page=${page}`
     ).then(response => response.json());
 };
 

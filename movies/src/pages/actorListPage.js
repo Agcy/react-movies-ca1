@@ -1,36 +1,51 @@
-import React from "react";
-import { getPopularActors } from "../api/tmdb-api";
+import React, {useState} from "react";
+import {getPopularActors} from "../api/tmdb-api";
 import ActorListPageTemplate from '../components/actor/templeteActorListPage'
 import AddToPreviewsIcon from '../components/cardIcons/addToPreviews'
-import { useQuery } from 'react-query';
+import {useQuery} from 'react-query';
 import Spinner from '../components/spinner';
 import AddToFollowedActorsIcon from "../components/cardIcons/addToFollowedActorsIcon";
+import PaginationComponent from "../pagination/paginationTemplate";
 
 const ActorListPage = (props) => {
-    const {  data, error, isLoading, isError }  = useQuery('actor', getPopularActors)
+    const [currentPage, setCurrentPage] = useState(1);
+    const {data, error, isLoading, isError} = useQuery(
+        ['actor', {page: currentPage}], getPopularActors)
 
     if (isLoading) {
-        return <Spinner />
+        return <Spinner/>
     }
 
     if (isError) {
         return <h1>{error.message}</h1>
     }
     const actors = data.results;
-    const favorites = actors.filter(m => m.actor)
-    localStorage.setItem('favorites', JSON.stringify(favorites))
+    const totalPages = data.total_pages;
+
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value);
+    };
+    const following = actors.filter(m => m.actor)
+    localStorage.setItem('favorites', JSON.stringify(following))
 
     // Redundant, but necessary to avoid app crashing.
     // const addToFavorites = (movieId) => true
 
     return (
-        <ActorListPageTemplate
-            title='Popular Actor'
-            actors={actors}
-            action={(actor) => {
-                return <AddToFollowedActorsIcon actor={actor} />
-            }}
-        />
+        <>
+            <ActorListPageTemplate
+                title='Popular Actor'
+                actors={actors}
+                action={(actor) => {
+                    return <AddToFollowedActorsIcon actor={actor}/>
+                }}
+            />
+            <PaginationComponent
+                totalPages={totalPages}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+            />
+        </>
     );
 };
 export default ActorListPage;
