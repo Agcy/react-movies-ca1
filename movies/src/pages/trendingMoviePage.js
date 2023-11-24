@@ -10,6 +10,7 @@ import AddToFavoritesIcon from "../components/cardIcons/addToFavorites";
 import PaginationComponent from "../pagination/paginationTemplate";
 import Header from "../components/movie/headerMovieList";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 
 const TrendingMoviesPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -35,7 +36,9 @@ const TrendingMoviesPage = () => {
     localStorage.setItem('favorites', JSON.stringify(favorites))
 
     return (
-        <>
+        <Box sx={{
+            background: 'linear-gradient(to bottom, #c0b2d7 0%, #6d5494 100%)'
+        }}>
             <Grid item xs={12}>
                 <Header title="Trending Movies" />
             </Grid>
@@ -52,7 +55,7 @@ const TrendingMoviesPage = () => {
                 currentPage={currentPage}
                 onPageChange={handlePageChange}
             />
-        </>
+        </Box>
     );
 };
 

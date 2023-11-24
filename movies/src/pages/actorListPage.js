@@ -6,6 +6,7 @@ import {useQuery} from 'react-query';
 import Spinner from '../components/spinner';
 import AddToFollowedActorsIcon from "../components/cardIcons/addToFollowedActorsIcon";
 import PaginationComponent from "../pagination/paginationTemplate";
+import Box from "@mui/material/Box";
 
 const ActorListPage = (props) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -32,7 +33,9 @@ const ActorListPage = (props) => {
     // const addToFavorites = (movieId) => true
 
     return (
-        <>
+        <Box sx={{
+            background: 'linear-gradient(to bottom, #9b59b6, #34495e)'
+        }}>
             <ActorListPageTemplate
                 title='Popular Actor'
                 actors={actors}
@@ -45,7 +48,7 @@ const ActorListPage = (props) => {
                 currentPage={currentPage}
                 onPageChange={handlePageChange}
             />
-        </>
+        </Box>
     );
 };
 export default ActorListPage;
