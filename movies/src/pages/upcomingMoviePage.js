@@ -1,35 +1,50 @@
-import React from "react";
-import { getUpcomingMovie } from "../api/tmdb-api";
+import React, {useState} from "react";
+import {getUpcomingMovie} from "../api/tmdb-api";
 import PageTemplate from '../components/movie/templateMovieListPage'
 import AddToPreviewsIcon from '../components/cardIcons/addToPreviews'
-import { useQuery } from 'react-query';
+import {useQuery} from 'react-query';
 import Spinner from '../components/spinner';
+import PaginationComponent from "../pagination/paginationTemplate";
 
 const UpcomingMoviePage = (props) => {
-  const {  data, error, isLoading, isError }  = useQuery('upcoming', getUpcomingMovie)
+    const [currentPage, setCurrentPage] = useState(1);
+    const {data, error, isLoading, isError} = useQuery(
+        ['upcoming', {page: currentPage}], getUpcomingMovie)
 
-  if (isLoading) {
-    return <Spinner />
-  }
+    if (isLoading) {
+        return <Spinner/>
+    }
 
-  if (isError) {
-    return <h1>{error.message}</h1>
-  }
-  const movies = data.results;
-  const favorites = movies.filter(m => m.upcoming)
-  localStorage.setItem('favorites', JSON.stringify(favorites))
+    if (isError) {
+        return <h1>{error.message}</h1>
+    }
+    const movies = data.results;
+    const totalPages = data.total_pages;
 
-  // Redundant, but necessary to avoid app crashing.
-  // const addToFavorites = (movieId) => true
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value);
+    };
+    const favorites = movies.filter(m => m.upcoming)
+    localStorage.setItem('favorites', JSON.stringify(favorites))
 
-  return (
-    <PageTemplate
-      title='Upcoming Movies'
-      movies={movies}
-      action={(movie) => {
-        return <AddToPreviewsIcon movie={movie} />
-      }}
-    />
-  );
+    // Redundant, but necessary to avoid app crashing.
+    // const addToFavorites = (movieId) => true
+
+    return (
+        <>
+            <PageTemplate
+                title='Upcoming Movies'
+                movies={movies}
+                action={(movie) => {
+                    return <AddToPreviewsIcon movie={movie}/>
+                }}
+            />
+            <PaginationComponent
+                totalPages={totalPages}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+            />
+        </>
+    );
 };
 export default UpcomingMoviePage;

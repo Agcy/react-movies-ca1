@@ -5,10 +5,8 @@ import PageTemplate from '../components/movie/templateMovieListPage';
 import Spinner from '../components/spinner';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites';
 import PaginationComponent from '../pagination/paginationTemplate';
-import { useNavigate, useParams } from 'react-router-dom';
 
 const HomePage = () => {
-    const navigate = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const { data, error, isLoading, isError } = useQuery(
         ['discover', { page: currentPage }], getMovies
