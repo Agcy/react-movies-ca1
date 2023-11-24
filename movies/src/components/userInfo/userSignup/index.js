@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import TextField from "@mui/material/TextField";
 import { useNavigate } from 'react-router-dom';
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {useAuth} from '../../../contexts/authContext';
 import Button from "@mui/material/Button";
 import { purple } from '@mui/material/colors';
 import Alert from '@mui/material/Alert'; // 引入 Alert 组件显示错误消息
@@ -13,7 +13,7 @@ const UserSignup = () => {
     const [username, setUsername] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const auth = getAuth();
+    const { signup } = useAuth();
 
     const handleSignup = async () => {
         if (password !== confirmPassword) {
@@ -22,16 +22,13 @@ const UserSignup = () => {
         }
 
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            await updateProfile(userCredential.user, {
-                displayName: username
-            });
-            // 注册成功后的操作，例如重定向到登录页面
-            navigate('/user/login');
+            await signup(email, password, username); // 调用 AuthContext 中的 signup
+            navigate('/');
         } catch (error) {
             setError("Failed to create an account: " + error.message);
         }
     };
+
 
     return (
         <>
