@@ -21,7 +21,7 @@ const HomePage = () => {
     }
 
     const movies = data.results;
-    const totalPages = data.total_pages;
+    const totalPages = Math.min(data.total_pages, 500);
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value);
