@@ -111,9 +111,11 @@ export const getUpcomingMovie = (args) => {
         });
 }
 
-export const getTrendingMovies = (language) => {
+export const getTrendingMovies = (args) => {
+    const [, pageMode] = args.queryKey
+    const {language, page} = pageMode
     return fetch(
-        `https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.REACT_APP_TMDB_KEY}&language=${language}`
+        `https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.REACT_APP_TMDB_KEY}&language=${language}&page=${page}`
     ).then(response => {
         if (!response.ok) {
             throw new Error(response.json().message);
