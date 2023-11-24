@@ -1,6 +1,6 @@
 // src/firebase.js
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -19,3 +19,5 @@ const app = initializeApp(firebaseConfig);
 // 获取 Firebase 服务的实例
 export const auth = getAuth(app);
 export const firestore = getFirestore(app);
+
+export const googleProvider = new GoogleAuthProvider()

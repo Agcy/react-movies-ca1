@@ -5,13 +5,15 @@ import TextField from "@mui/material/TextField";
 import Paper from '@mui/material/Paper';
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
+import MailIcon from '@mui/icons-material/Mail';
 import {purple} from "@mui/material/colors";
+import {googleProvider} from "../../../firebase/firebase";
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(''); // 新增错误状态
-    const {login} = useAuth();
+    const {login, loginWithGoogle} = useAuth();
     const navigate = useNavigate();
 
     const handleLogin = async () => {
@@ -23,6 +25,17 @@ const Login = () => {
             // 捕获并显示错误消息
             setError('Failed to log in');
             console.error("Login error: ", error);
+        }
+    };
+
+    const handleGoogleLogin = async () => {
+        try {
+            setError(''); // 清除之前的错误消息
+            await loginWithGoogle(googleProvider);
+            navigate('/'); // 导航到主页或其他页面
+        } catch (error) {
+            setError('Failed to log in');
+            console.error('Error during Google login:', error);
         }
     };
     return (
@@ -63,6 +76,12 @@ const Login = () => {
                     }
                 }}
             />
+            <Button
+                onClick={handleGoogleLogin}
+            >
+                <MailIcon/>
+                login with google
+            </Button>
             <Button
                 onClick={handleLogin}
                 fullWidth
