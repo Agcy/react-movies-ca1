@@ -1,8 +1,8 @@
-import React, {useState} from "react";
-import {getUpcomingMovie} from "../api/tmdb-api";
+import React, { useState } from "react";
+import { useQueries, useQuery } from 'react-query';
+import { getUpcomingMovie, getMovieImages } from "../api/tmdb-api";
 import PageTemplate from '../components/movie/templateMovieListPage'
 import AddToPreviewsIcon from '../components/cardIcons/addToPreviews'
-import {useQuery} from 'react-query';
 import Spinner from '../components/spinner';
 import PaginationComponent from "../pagination/paginationTemplate";
 import Header from "../components/movie/headerMovieList";
@@ -11,27 +11,44 @@ import Box from "@mui/material/Box";
 
 const UpcomingMoviePage = (props) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const {data, error, isLoading, isError} = useQuery(
-        ['upcoming', {page: currentPage}], getUpcomingMovie)
+    const { data: moviesData, error, isLoading, isError } = useQuery(
+        ['upcoming', { page: currentPage }], getUpcomingMovie
+    );
 
-    if (isLoading) {
-        return <Spinner/>
+    // 当电影数据可用时，发起图片查询
+    const movieImageQueries = useQueries(
+        moviesData?.results?.slice(0, 6).map(movie => ({
+            queryKey: ['movieImages', { id: movie.id }],
+            queryFn: getMovieImages
+        })) || []
+    );
+
+    // 检查图片是否正在加载或有错误
+    const isImagesLoading = movieImageQueries.some(query => query.isLoading);
+    const imagesError = movieImageQueries.find(query => query.isError)?.error;
+
+    if (isLoading || isImagesLoading) {
+        return <Spinner />;
     }
 
     if (isError) {
-        return <h1>{error.message}</h1>
+        return <h1>{error.message}</h1>;
     }
-    const movies = data.results;
-    const totalPages = Math.min(data.total_pages, 500);
+
+    if (imagesError) {
+        return <h1>{imagesError.message}</h1>;
+    }
+
+    const movies = moviesData.results;
+    const moviePosters = movieImageQueries.map(query =>
+        query.data?.backdrops[0]?.file_path
+    ).filter(path => path);
+
+    const totalPages = Math.min(moviesData.total_pages, 500);
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value);
     };
-    const favorites = movies.filter(m => m.upcoming)
-    localStorage.setItem('favorites', JSON.stringify(favorites))
-
-    // Redundant, but necessary to avoid app crashing.
-    // const addToFavorites = (movieId) => true
 
     return (
         <Box sx={{
@@ -42,9 +59,8 @@ const UpcomingMoviePage = (props) => {
             </Grid>
             <PageTemplate
                 movies={movies}
-                action={(movie) => {
-                    return <AddToPreviewsIcon movie={movie}/>
-                }}
+                images={moviePosters}
+                action={(movie) => <AddToPreviewsIcon movie={movie} />}
             />
             <PaginationComponent
                 totalPages={totalPages}
@@ -54,4 +70,5 @@ const UpcomingMoviePage = (props) => {
         </Box>
     );
 };
+
 export default UpcomingMoviePage;
