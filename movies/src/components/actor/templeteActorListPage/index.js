@@ -3,8 +3,9 @@ import HeaderActorList from "../headerActorList"; // 演员的头部组件
 import FilterActorsCard from "../filterActorsCard"; // 演员的过滤卡片
 import ActorList from "../actorList"; // 演员列表组件
 import Grid from "@mui/material/Grid";
+import CarouselComponent from "../../carousel";
 
-function ActorListPageTemplate({ actors = [], title, action }) {
+function ActorListPageTemplate({ actors = [], title, action, images }) {
 
     const [nameFilter, setNameFilter] = useState("");
 
@@ -18,9 +19,12 @@ function ActorListPageTemplate({ actors = [], title, action }) {
 
     return (
         <Grid container sx={{ padding: '20px' }}>
-            <Grid item xs={12}>
-                <HeaderActorList title={title} />
-            </Grid>
+            {/* 轮播图片展示 */}
+            {images && images.length > 0 && (
+                <Grid item xs={12}>
+                    <CarouselComponent images={images}/>
+                </Grid>
+            )}
             <Grid item container spacing={5}>
                 <Grid key="find" item xs={12} sm={12} md={12} lg={12} xl={12}>
                     <FilterActorsCard
