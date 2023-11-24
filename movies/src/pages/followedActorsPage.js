@@ -1,19 +1,21 @@
-import React, { useContext } from "react";
-import { ActorsContext } from "../contexts/actorsContext";
+import React, {useContext} from "react";
+import {ActorsContext} from "../contexts/actorsContext";
 import PageTemplate from "../components/actor/templeteActorListPage";
-import { useQueries } from "react-query";
+import {useQueries} from "react-query";
 import {getActor} from "../api/tmdb-api";
 import Spinner from '../components/spinner';
 import RemoveFromFollowed from "../components/cardIcons/removeFromFollowed";
+import Header from "../components/movie/headerMovieList";
+import Grid from "@mui/material/Grid";
 
 const FollowedActorsPage = () => {
-    const {following: actorIds } = useContext(ActorsContext);
+    const {following: actorIds} = useContext(ActorsContext);
 
     // Create an array of queries and run in parallel.
     const followActorQueries = useQueries(
         actorIds.map((actorId) => {
             return {
-                queryKey: ["actor", { id: actorId }],
+                queryKey: ["actor", {id: actorId}],
                 queryFn: getActor,
             };
         })
@@ -22,7 +24,7 @@ const FollowedActorsPage = () => {
     const isLoading = followActorQueries.find((m) => m.isLoading === true);
 
     if (isLoading) {
-        return <Spinner />;
+        return <Spinner/>;
     }
 
     const actors = followActorQueries
@@ -31,13 +33,16 @@ const FollowedActorsPage = () => {
     const toDo = () => true;
 
     return (
-        <PageTemplate
-            title="Followed Actors"
-            actors={actors}
-            action={(actor) => (
-                <RemoveFromFollowed actor={actor}/>
-            )}
-        />
+        <>
+            <Grid item xs={12}>
+                <Header title="Followed Actors"/>
+            </Grid>
+            <PageTemplate
+                actors={actors}
+                action={(actor) => (
+                    <RemoveFromFollowed actor={actor}/>
+                )}
+            /></>
     );
 };
 

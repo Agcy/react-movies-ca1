@@ -41,7 +41,7 @@ export default function MovieCard({ movie, action }) {
           ) : null
         }
         title={
-          <Typography variant="h5" component="p">
+          <Typography variant="p" component="p">
             {movie.title}{" "}
           </Typography>
         }
@@ -57,13 +57,13 @@ export default function MovieCard({ movie, action }) {
       <CardContent>
         <Grid container>
           <Grid item xs={6}>
-            <Typography variant="h6" component="p" sx={{maxHeight: 150}}>
+            <Typography variant="p" component="p" sx={{maxHeight: 150}}>
               <CalendarIcon fontSize="small" />
               {movie.release_date}
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Typography variant="h6" component="p" sx={{maxHeight: 100}}>
+            <Typography variant="p" component="p" sx={{maxHeight: 100}}>
               <StarRateIcon fontSize="small" />
               {"  "} {movie.vote_average}{" "}
             </Typography>

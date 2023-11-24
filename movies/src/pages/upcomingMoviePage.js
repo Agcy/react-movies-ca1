@@ -5,6 +5,8 @@ import AddToPreviewsIcon from '../components/cardIcons/addToPreviews'
 import {useQuery} from 'react-query';
 import Spinner from '../components/spinner';
 import PaginationComponent from "../pagination/paginationTemplate";
+import Header from "../components/movie/headerMovieList";
+import Grid from "@mui/material/Grid";
 
 const UpcomingMoviePage = (props) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -32,8 +34,10 @@ const UpcomingMoviePage = (props) => {
 
     return (
         <>
+            <Grid item xs={12}>
+                <Header title='Upcoming Movies' />
+            </Grid>
             <PageTemplate
-                title='Upcoming Movies'
                 movies={movies}
                 action={(movie) => {
                     return <AddToPreviewsIcon movie={movie}/>

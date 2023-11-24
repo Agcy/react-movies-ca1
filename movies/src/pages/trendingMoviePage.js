@@ -8,6 +8,8 @@ import RemoveFromPreviews from "../components/cardIcons/removeFromPreviews";
 import PageTemplate from "../components/movie/templateMovieListPage";
 import AddToFavoritesIcon from "../components/cardIcons/addToFavorites";
 import PaginationComponent from "../pagination/paginationTemplate";
+import Header from "../components/movie/headerMovieList";
+import Grid from "@mui/material/Grid";
 
 const TrendingMoviesPage = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -34,8 +36,10 @@ const TrendingMoviesPage = () => {
 
     return (
         <>
+            <Grid item xs={12}>
+                <Header title="Trending Movies" />
+            </Grid>
             <PageTemplate
-                title="Trending Movies"
                 movies={movies}
                 action={(movie) => {
                     return (

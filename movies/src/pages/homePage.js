@@ -5,6 +5,8 @@ import PageTemplate from '../components/movie/templateMovieListPage';
 import Spinner from '../components/spinner';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites';
 import PaginationComponent from '../pagination/paginationTemplate';
+import Header from "../components/movie/headerMovieList";
+import Grid from "@mui/material/Grid";
 
 const HomePage = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -30,9 +32,12 @@ const HomePage = () => {
 
     return (
         <>
+            <Grid item xs={12}>
+                <Header title="Discover Movies" />
+            </Grid>
             <PageTemplate
-                title="Discover Movies"
                 movies={movies}
+                images={movies.poster_path}
                 action={(movie) => <AddToFavoritesIcon movie={movie} />}
             />
             <PaginationComponent
