@@ -1,9 +1,11 @@
 import React, {useEffect} from "react";
 import i18n from '../components/languageOptions/index'
 
-export const getMovies = (language) => {
+export const getMovies = (args) => {
+    const [, pageMode] = args.queryKey
+    const {language, page} = pageMode
     return fetch(
-        `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=${language}&include_adult=false&include_video=false&page=1`
+        `https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_TMDB_KEY}&language=${language}&include_adult=false&include_video=false&page=${page}`
     ).then((response) => {
         if (!response.ok) {
             throw new Error(response.json().message);
@@ -93,9 +95,11 @@ export const getMovieReviews = (id) => {
         });
 };
 
-export const getUpcomingMovie = (language) => {
+export const getUpcomingMovie = (args) => {
+    const [, pageMode] = args.queryKey
+    const {language, page} = pageMode
     return fetch(
-        `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=${language}&page=1`
+        `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=${language}&page=${page}`
     ).then((response) => {
         if (!response.ok) {
             throw new Error(response.json().message);
