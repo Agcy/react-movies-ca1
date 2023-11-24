@@ -1,4 +1,3 @@
-// src/components/Login.js
 import React, {useState} from 'react';
 import {useAuth} from '../../../contexts/authContext';
 import {useNavigate} from 'react-router-dom';
@@ -11,17 +10,21 @@ import {purple} from "@mui/material/colors";
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(''); // 新增错误状态
     const {login} = useAuth();
     const navigate = useNavigate();
 
     const handleLogin = async () => {
-        // 这里调用 Firebase Auth 或其他身份验证服务
-        // 假设登录成功并获取到了用户数据
-        const userData = {name: 'User', email};
-        login(userData);
-        navigate('/');
+        try {
+            setError(''); // 清除之前的错误消息
+            await login(email, password); // 使用 email 和 password 调用 login 函数
+            navigate('/'); // 导航到主页或其他页面
+        } catch (error) {
+            // 捕获并显示错误消息
+            setError('Failed to log in');
+            console.error("Login error: ", error);
+        }
     };
-
     return (
         <>
             <TextField

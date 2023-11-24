@@ -89,10 +89,14 @@ const LoginSignupTemplate = ({ type }) => {
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                <Login/>
+                <Typography component="div">{/* 使用 div 替代 p */}
+                    <Login/>
+                </Typography>
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                <UserSignup/>
+                <Typography component="div">{/* 使用 div 替代 p */}
+                    <UserSignup/>
+                </Typography>
             </CustomTabPanel>
         </Box>
     );
