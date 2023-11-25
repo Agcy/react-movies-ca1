@@ -41,7 +41,7 @@ export default function ActorCard({ actor, action }) {
                     )
                 }
                 title={
-                    <Typography variant="h5" component="p">
+                    <Typography variant="p" component="p">
                         {actor && actor.name ? actor.name : 'Unknown Actor'}
                     </Typography>
                 }

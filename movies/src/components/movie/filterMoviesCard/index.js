@@ -26,6 +26,7 @@ export default function FilterMoviesCard(props) {
   const { data, error, isLoading, isError } = useQuery("genres", getGenres);
 
   const [blurAmount, setBlurAmount] = useState(0);
+  const [sortMethod, setSortMethod] = useState(''); // 新状态变量
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,6 +63,11 @@ export default function FilterMoviesCard(props) {
 
   const handleGenreChange = (e) => {
     handleChange(e, "genre", e.target.value);
+  };
+
+  const handleSortChange = (e) => {
+    setSortMethod(e.target.value);
+    props.onUserInput("sort", e.target.value); // 更新排序方法
   };
 
   return (
@@ -116,6 +122,20 @@ export default function FilterMoviesCard(props) {
                 </MenuItem>
               );
             })}
+          </Select>
+        </FormControl>
+        <FormControl sx={{ ...formControl }}>
+          <InputLabel id="sort-label">Sort By</InputLabel>
+          <Select
+              labelId="sort-label"
+              id="sort-select"
+              value={sortMethod}
+              onChange={handleSortChange}
+          >
+            <MenuItem value="rating_desc">Rating: High to Low</MenuItem>
+            <MenuItem value="rating_asc">Rating: Low to High</MenuItem>
+            <MenuItem value="release_date_desc">Release Date: Newest</MenuItem>
+            <MenuItem value="release_date_asc">Release Date: Oldest</MenuItem>
           </Select>
         </FormControl>
       </CardContent>
